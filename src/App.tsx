@@ -1,12 +1,16 @@
 import { onAuthStateChanged, Unsubscribe } from "firebase/auth";
 import { useEffect } from "react";
-import { useAppDispatch } from "./App/hookts";
-import SignIn from "./components/SignIn.component";
+import { Route, Routes } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "./App/hookts";
+import SignedIn from "./components/SignedIn.component";
+import SignIn from "./components/SignIn/SignIn.component";
 import { setCurrentUser } from "./features/currentUser/currentUser.slice";
 import { auth } from "./firebase/firebase.utils";
 
 function App() {
   const dispatch = useAppDispatch();
+
+  const currentUserSlice = useAppSelector((state) => state.currentUser);
 
   // listener for when a user loggd in or out
   let unsubscribeFromAuth: null | Unsubscribe = null;
@@ -21,7 +25,7 @@ function App() {
   }, [auth.currentUser]);
   return (
     <div className="App">
-      <SignIn />
+      {currentUserSlice.userInfo ? <SignedIn /> : <SignIn />}
     </div>
   );
 }
