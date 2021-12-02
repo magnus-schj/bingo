@@ -34,7 +34,7 @@ export const db = getFirestore();
 const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
-export const makeBoard = async (userAuth: User, board: Square[]) => {
+export const saveBoard = async (userAuth: User, board: Square[]) => {
   const boardref = doc(db, "boards", userAuth.uid);
 
   const snapShot = await getDoc(boardref);
@@ -44,7 +44,7 @@ export const makeBoard = async (userAuth: User, board: Square[]) => {
     try {
       await setDoc(boardref, { createdAt });
       board.forEach(async (square) => {
-        const squareRef = doc(db, "boards", userAuth.uid, "sqaures", v4());
+        const squareRef = doc(db, "boards", userAuth.uid, "squares", v4());
         await setDoc(squareRef, square);
       });
     } catch (error) {

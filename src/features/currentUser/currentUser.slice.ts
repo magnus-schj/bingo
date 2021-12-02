@@ -16,7 +16,10 @@ export const currentUserSlice = createSlice({
     setCurrentUser(state, { payload }) {
       state.userInfo = payload;
     },
+    setBoard(state, { payload }) {
+      state.board = payload;
+    },
   },
 });
 
-export const { setCurrentUser } = currentUserSlice.actions;
+export const { setCurrentUser, setBoard } = currentUserSlice.actions;

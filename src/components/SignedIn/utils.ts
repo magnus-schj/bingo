@@ -1,12 +1,13 @@
 import { Square } from "../../interfaces";
 
 const data: Square[] = [
-  { event: "X tar bilder", instantWin: false },
-  { event: "En runde til", instantWin: false },
-  { event: "Liv Annika blir lei ", instantWin: false },
+  { event: "X tar bilder", instantWin: false, happened: false },
+  { event: "En runde til", instantWin: false, happened: false },
+  { event: "Liv Annika blir lei ", instantWin: false, happened: false },
   {
     event: "X kommanderer folk i bildeproduksjon",
     instantWin: false,
+    happened: false,
   },
 ];
 
