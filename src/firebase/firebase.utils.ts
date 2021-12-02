@@ -1,8 +1,15 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
+} from "firebase/auth";
+import { Square } from "../interfaces";
+import { v4 } from "uuid";
 
 // ! firebase basic config
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,3 +33,22 @@ export const db = getFirestore();
 // ** Sign in with google
 const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
+
+export const makeBoard = async (userAuth: User, board: Square[]) => {
+  const boardref = doc(db, "boards", userAuth.uid);
+
+  const snapShot = await getDoc(boardref);
+
+  if (!snapShot.exists()) {
+    const createdAt = new Date();
+    try {
+      await setDoc(boardref, { createdAt });
+      board.forEach(async (square) => {
+        const squareRef = doc(db, "boards", userAuth.uid, "sqaures", v4());
+        await setDoc(squareRef, square);
+      });
+    } catch (error) {
+      console.log("error creating board:", error);
+    }
+  }
+};

@@ -1,8 +1,7 @@
 import { onAuthStateChanged, Unsubscribe } from "firebase/auth";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./App/hookts";
-import SignedIn from "./components/SignedIn.component";
+import SignedIn from "./components/SignedIn/SignedIn.component";
 import SignIn from "./components/SignIn/SignIn.component";
 import { setCurrentUser } from "./features/currentUser/currentUser.slice";
 import { auth } from "./firebase/firebase.utils";
