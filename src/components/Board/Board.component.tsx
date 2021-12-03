@@ -14,10 +14,10 @@ const Board: FC<Props> = () => {
     <div>
       <ul>
         {currentUserSlice.board &&
-          currentUserSlice.board.map((row: Square[]) => (
-            <div className="row">
-              {row.map((square) => (
-                <SquareComponent event={square.event} />
+          currentUserSlice.board.map((row: Square[], i) => (
+            <div key={i} className="row">
+              {row.map(({ event, id }) => (
+                <SquareComponent key={id} event={event} />
               ))}
             </div>
           ))}

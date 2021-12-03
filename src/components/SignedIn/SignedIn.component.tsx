@@ -14,7 +14,6 @@ interface Props {}
 const SignedIn: FC<Props> = () => {
   const dispatch = useAppDispatch();
 
-  const currentUserSlice = useAppSelector((state) => state.currentUser);
   useEffect(() => {
     // listener for board
     let unsub: null | Unsubscribe = null;
@@ -39,8 +38,6 @@ const SignedIn: FC<Props> = () => {
     <div>
       <AppBar position="fixed" color="primary">
         <Toolbar>
-          <Typography variant="h6">App Bar</Typography>
-
           <Button
             variant="contained"
             color="secondary"
