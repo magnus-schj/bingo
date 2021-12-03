@@ -14,12 +14,47 @@ const data: Square[] = [
     instantWin: false,
     happened: false,
   },
+  {
+    event: "Bestemor blir drittlei av å bli tatt bilde av",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestemor ragequiter det vi holder på med",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar og Bjørn er uenige om hvilken vei som er best",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar og pappa blir uenige om noe annet",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar klager på veien",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar kjefter på noen",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Samme bilde, annet kamera/person",
+    instantWin: false,
+    happened: false,
+  },
 ];
 
 export const generateBoard = () => {
   const board: Square[] = [];
   let i = 0;
-  while (board.length < 4) {
+  while (board.length < 9) {
     const randomSquare = data[Math.floor(Math.random() * data.length)];
     if (board.find((square) => square === randomSquare)) continue;
     randomSquare.index = i;

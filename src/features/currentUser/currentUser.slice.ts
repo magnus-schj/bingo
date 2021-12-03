@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 import { Square } from "../../interfaces";
 interface CurrentUserState {
   userInfo: null | User;
-  board: null | Square[];
+  board: null | Square[][];
 }
 
 const initialState: CurrentUserState = {
@@ -17,8 +17,25 @@ export const currentUserSlice = createSlice({
     setCurrentUser(state, { payload }) {
       state.userInfo = payload;
     },
-    setBoard(state, { payload }) {
-      state.board = payload;
+    setBoard: {
+      reducer: (state, action: PayloadAction<Square[][]>) => {
+        state.board = action.payload;
+      },
+      prepare: (squares) => {
+        const dimension = 3;
+        // fills board with rows
+        const board: Square[][] = [];
+        while (board.length < dimension) {
+          // fills row with squares
+          const row: Square[] = [];
+          while (row.length < dimension) {
+            const square = squares[board.length * dimension + row.length];
+            row.push(square);
+          }
+          board.push(row);
+        }
+        return { payload: board };
+      },
     },
   },
 });

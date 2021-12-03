@@ -7,7 +7,7 @@ import { generateBoard } from "./utils";
 import { collection, onSnapshot, Unsubscribe } from "firebase/firestore";
 import { setBoard } from "../../features/currentUser/currentUser.slice";
 import { Square } from "../../interfaces";
-import Board from "../Board.component";
+import Board from "../Board/Board.component";
 
 interface Props {}
 
