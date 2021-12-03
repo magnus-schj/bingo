@@ -3,4 +3,5 @@ export interface Square {
   instantWin: boolean;
   happened: boolean;
   id?: string;
+  index?: number;
 }

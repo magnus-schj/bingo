@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
+import { Square } from "../../interfaces";
 interface CurrentUserState {
   userInfo: null | User;
-  board: null | object;
+  board: null | Square[];
 }
 
 const initialState: CurrentUserState = {

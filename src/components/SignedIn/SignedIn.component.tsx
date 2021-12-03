@@ -2,10 +2,12 @@ import React, { FC, useEffect } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../App/hookts";
 import { auth, db, saveBoard } from "../../firebase/firebase.utils";
-import { Button } from "@mui/material";
+import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
 import { collection, onSnapshot, Unsubscribe } from "firebase/firestore";
 import { setBoard } from "../../features/currentUser/currentUser.slice";
+import { Square } from "../../interfaces";
+import Board from "../Board.component";
 
 interface Props {}
 
@@ -24,7 +26,6 @@ const SignedIn: FC<Props> = () => {
           querySnapShot.forEach((doc) =>
             board.push({ id: doc.id, ...doc.data() })
           );
-          console.log(board);
           dispatch(setBoard(board));
         }
       );
@@ -36,13 +37,22 @@ const SignedIn: FC<Props> = () => {
   }, []);
   return (
     <div>
-      <ul>
-        {currentUserSlice.board &&
-          currentUserSlice.board.map((square) => <li>{square.event}</li>)}
-      </ul>
-      <Button variant="contained" onClick={() => auth.signOut()}>
-        Logg ut
-      </Button>
+      <AppBar position="fixed" color="primary">
+        <Toolbar>
+          <Typography variant="h6">App Bar</Typography>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => auth.signOut()}
+          >
+            Logg ut
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <main style={{ marginTop: "6rem" }}>
+        <Board />
+      </main>
     </div>
   );
 };

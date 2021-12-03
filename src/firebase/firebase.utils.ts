@@ -34,6 +34,7 @@ export const db = getFirestore();
 const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
+// save board
 export const saveBoard = async (userAuth: User, board: Square[]) => {
   const boardref = doc(db, "boards", userAuth.uid);
 
