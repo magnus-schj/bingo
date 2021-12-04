@@ -53,3 +53,15 @@ export const saveBoard = async (userAuth: User, board: Square[]) => {
     }
   }
 };
+
+// mark square
+export const markAsHappened = async (uId: string, sId: string) => {
+  const ref = doc(db, "boards", uId, "squares", sId);
+  const snapshot = await (await getDoc(ref)).data();
+
+  try {
+    await setDoc(ref, { ...snapshot, happened: true });
+  } catch (error) {
+    console.log("error marking square:", error);
+  }
+};

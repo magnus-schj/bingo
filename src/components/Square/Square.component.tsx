@@ -1,21 +1,32 @@
 import React, { FC } from "react";
 
 import "./Square.styles.css";
-import { ButtonBase } from "@mui/material";
+import { ButtonBase, Card } from "@mui/material";
+import { markAsHappened } from "../../firebase/firebase.utils";
 
 interface Props {
   event: string;
+  uId?: string;
+  sId: string;
+  happened: boolean;
 }
 
-const SquareComponent: FC<Props> = ({ event }) => {
+const SquareComponent: FC<Props> = ({ event, uId, sId, happened }) => {
+  if (!uId) return null;
+
   return (
-    <ButtonBase
-      sx={{
-        padding: "4rem",
-      }}
-    >
-      {event}
-    </ButtonBase>
+    <Card>
+      <ButtonBase
+        onClick={() => markAsHappened(uId, sId)}
+        disabled={happened}
+        sx={{
+          padding: "4rem",
+          background: happened ? "gold" : "white",
+        }}
+      >
+        {event}
+      </ButtonBase>
+    </Card>
   );
 };
 

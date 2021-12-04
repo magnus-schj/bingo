@@ -1,9 +1,11 @@
-export interface Square {
+export interface SquareDraft {
   event: string;
   instantWin: boolean;
   happened: boolean;
-  id?: string;
-  index?: number;
+}
+export interface Square extends SquareDraft {
+  id: string;
+  index: number;
 }
 
 export interface SignUpForm {

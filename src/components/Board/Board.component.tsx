@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useAppSelector } from "../../App/hookts";
+import { auth } from "../../firebase/firebase.utils";
 import { Square } from "../../interfaces";
 import SquareComponent from "../Square/Square.component";
 
@@ -16,8 +17,13 @@ const Board: FC<Props> = () => {
         {currentUserSlice.board &&
           currentUserSlice.board.map((row: Square[], i) => (
             <div key={i} className="row">
-              {row.map(({ event, id }) => (
-                <SquareComponent key={id} event={event} />
+              {row.map(({ id, ...data }) => (
+                <SquareComponent
+                  key={id}
+                  uId={currentUserSlice.userInfo?.uid}
+                  sId={id}
+                  {...data}
+                />
               ))}
             </div>
           ))}
