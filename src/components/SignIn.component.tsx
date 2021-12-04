@@ -6,7 +6,7 @@ import { signInWithGoogle } from "../firebase/firebase.utils";
 interface Props {}
 
 const SignIn: FC<Props> = () => {
-  const initialState = { name: "", password: "" };
+  const initialState = { email: "", password: "" };
   const [values, handleChange, setValues] = useForm(initialState);
   return (
     <Card className="form-container">
@@ -16,10 +16,10 @@ const SignIn: FC<Props> = () => {
       <TextField
         variant="filled"
         // values
-        id="name"
-        label="navn"
-        name="name"
-        value={values.name}
+        id="email"
+        label="epost"
+        name="email"
+        value={values.email}
         onChange={handleChange}
       />
       <TextField
@@ -28,6 +28,7 @@ const SignIn: FC<Props> = () => {
         id="password"
         label="password"
         name="password"
+        type="password"
         value={values.password}
         onChange={handleChange}
       />
