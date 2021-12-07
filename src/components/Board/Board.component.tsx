@@ -1,6 +1,7 @@
 import { useMediaQuery } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import { useAppSelector } from "../../App/hookts";
+import { useAppDispatch, useAppSelector } from "../../App/hookts";
+import { resetBoard } from "../../features/currentUser/currentUser.slice";
 import { auth } from "../../firebase/firebase.utils";
 import { Square } from "../../interfaces";
 import SquareComponent from "../Square/Square.component";
@@ -11,6 +12,7 @@ import { matrixNotNull } from "./utils";
 interface Props {}
 
 const Board: FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const currentUserSlice = useAppSelector((state) => state.currentUser);
   const { board } = currentUserSlice;
   const [loaded, setLoaded] = useState(false);
@@ -21,9 +23,6 @@ const Board: FC<Props> = () => {
     if (matrixNotNull(board)) {
       setLoaded(true);
     } else setLoaded(false);
-    return () => {
-      setLoaded(false);
-    };
   }, [currentUserSlice.board]);
 
   if (!loaded) return <h1>Loading...</h1>;

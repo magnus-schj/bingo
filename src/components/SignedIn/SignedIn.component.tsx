@@ -5,7 +5,10 @@ import { auth, db, saveBoard } from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
 import { collection, onSnapshot, Unsubscribe } from "firebase/firestore";
-import { setBoard } from "../../features/currentUser/currentUser.slice";
+import {
+  resetBoard,
+  setBoard,
+} from "../../features/currentUser/currentUser.slice";
 import { Square } from "../../interfaces";
 import Board from "../Board/Board.component";
 
@@ -32,8 +35,10 @@ const SignedIn: FC<Props> = () => {
     auth.currentUser && saveBoard(auth.currentUser, generateBoard());
     return () => {
       unsub && unsub();
+      dispatch(resetBoard());
     };
   }, []);
+
   return (
     <div>
       <AppBar position="fixed" color="primary">

@@ -1,4 +1,4 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 import { DIMENSION } from "../../components/SignedIn/utils";
 import { Square } from "../../interfaces";
@@ -37,7 +37,12 @@ export const currentUserSlice = createSlice({
         return { payload: board };
       },
     },
+
+    resetBoard(state) {
+      state.board = null;
+    },
   },
 });
 
-export const { setCurrentUser, setBoard } = currentUserSlice.actions;
+export const { setCurrentUser, setBoard, resetBoard } =
+  currentUserSlice.actions;

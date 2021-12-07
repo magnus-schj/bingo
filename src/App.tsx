@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./App/hookts";
 import SignedIn from "./components/SignedIn/SignedIn.component";
 import SignInAndSignUp from "./components/SignInAndSignUp/SignInAndSignUp.component";
-import { setCurrentUser } from "./features/currentUser/currentUser.slice";
+import {
+  resetBoard,
+  setCurrentUser,
+} from "./features/currentUser/currentUser.slice";
 import { auth } from "./firebase/firebase.utils";
 
 function App() {
@@ -22,6 +25,7 @@ function App() {
       if (unsubscribeFromAuth) unsubscribeFromAuth();
     };
   }, [auth.currentUser]);
+
   return (
     <div className="App">
       {currentUserSlice.userInfo ? <SignedIn /> : <SignInAndSignUp />}
