@@ -1,6 +1,6 @@
-import { Square } from "../../interfaces";
+import { Square, SquareDraft } from "../../interfaces";
 
-const data: Square[] = [
+const data: SquareDraft[] = [
   { event: "X tar bilder", instantWin: false, happened: false },
   { event: "En runde til", instantWin: false, happened: false },
   { event: "Liv Annika blir lei ", instantWin: false, happened: false },
@@ -49,13 +49,43 @@ const data: Square[] = [
     instantWin: false,
     happened: false,
   },
+  {
+    event: "Bestemor og Bestefar kjefter på hverandre",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestemor og Bestefar kjefter på barna sine",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Pappa sier 'lat som dere har det bra!'",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar sier honeybun!",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Mer enn et bilde blir tatt på to min (forskjellige steder)",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar sier 'aaaaaaghhh!'",
+    instantWin: false,
+    happened: false,
+  },
 ];
 
 export const generateBoard = () => {
   const board: Square[] = [];
   let i = 0;
-  while (board.length < 9) {
-    const randomSquare = data[Math.floor(Math.random() * data.length)];
+  while (board.length < DIMENSION ** 2) {
+    const randomSquare: Square = data[Math.floor(Math.random() * data.length)];
     if (board.find((square) => square === randomSquare)) continue;
     randomSquare.index = i;
     i++;
@@ -63,3 +93,5 @@ export const generateBoard = () => {
   }
   return board;
 };
+
+export const DIMENSION = 4;

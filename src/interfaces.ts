@@ -4,8 +4,8 @@ export interface SquareDraft {
   happened: boolean;
 }
 export interface Square extends SquareDraft {
-  id: string;
-  index: number;
+  id?: string;
+  index?: number;
 }
 
 export interface SignUpForm {

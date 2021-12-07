@@ -1,5 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
+import { DIMENSION } from "../../components/SignedIn/utils";
 import { Square } from "../../interfaces";
 interface CurrentUserState {
   userInfo: null | User;
@@ -22,14 +23,13 @@ export const currentUserSlice = createSlice({
         state.board = action.payload;
       },
       prepare: (squares) => {
-        const dimension = 3;
         // fills board with rows
         const board: Square[][] = [];
-        while (board.length < dimension) {
+        while (board.length < DIMENSION) {
           // fills row with squares
           const row: Square[] = [];
-          while (row.length < dimension) {
-            const square = squares[board.length * dimension + row.length];
+          while (row.length < DIMENSION) {
+            const square = squares[board.length * DIMENSION + row.length];
             row.push(square);
           }
           board.push(row);

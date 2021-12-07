@@ -1,18 +1,32 @@
 import { useMediaQuery } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useAppSelector } from "../../App/hookts";
 import { auth } from "../../firebase/firebase.utils";
 import { Square } from "../../interfaces";
 import SquareComponent from "../Square/Square.component";
 
 import "./Board.styles.css";
+import { matrixNotNull } from "./utils";
 
 interface Props {}
 
 const Board: FC<Props> = () => {
   const currentUserSlice = useAppSelector((state) => state.currentUser);
-
+  const { board } = currentUserSlice;
+  const [loaded, setLoaded] = useState(false);
   const pad = useMediaQuery("(max-width:542px)");
+
+  useEffect(() => {
+    // checks that board is not null or filled with nulls
+    if (matrixNotNull(board)) {
+      setLoaded(true);
+    } else setLoaded(false);
+    return () => {
+      setLoaded(false);
+    };
+  }, [currentUserSlice.board]);
+
+  if (!loaded) return <h1>Loading...</h1>;
   return (
     <div
       style={{
