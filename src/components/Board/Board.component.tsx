@@ -7,7 +7,7 @@ import { Square } from "../../interfaces";
 import SquareComponent from "../Square/Square.component";
 
 import "./Board.styles.css";
-import { matrixNotNull } from "./utils";
+import { hasUserWon, matrixNotNull, matrixToArray } from "./utils";
 
 interface Props {}
 
@@ -20,8 +20,12 @@ const Board: FC<Props> = () => {
 
   useEffect(() => {
     // checks that board is not null or filled with nulls
-    if (matrixNotNull(board)) {
+    if (matrixNotNull(board) && board) {
       setLoaded(true);
+      // checks if user has won
+      if (hasUserWon(matrixToArray(board))) {
+        console.log("winner!");
+      }
     } else setLoaded(false);
   }, [currentUserSlice.board]);
 

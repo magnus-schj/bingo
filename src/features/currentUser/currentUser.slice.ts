@@ -22,6 +22,7 @@ export const currentUserSlice = createSlice({
       reducer: (state, action: PayloadAction<Square[][]>) => {
         state.board = action.payload;
       },
+      // array to matrix
       prepare: (squares) => {
         // fills board with rows
         const board: Square[][] = [];
