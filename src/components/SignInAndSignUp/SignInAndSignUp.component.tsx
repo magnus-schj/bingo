@@ -15,7 +15,7 @@ const SignInAndSignUp: FC<Props> = () => {
         Bingo
       </Typography>
       <SignIn />
-      <SignUp />
+      {/* <SignUp /> */}
     </div>
   );
 };

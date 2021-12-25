@@ -3,8 +3,8 @@ import { Square, SquareDraft } from "../../interfaces";
 // data and function for making a board
 const data: SquareDraft[] = [
   { event: "X tar bilder", instantWin: false, happened: false },
-  { event: "En runde til", instantWin: false, happened: false },
-  { event: "Liv Annika blir lei ", instantWin: false, happened: false },
+  { event: "'En runde til'", instantWin: false, happened: false },
+  { event: "Liv Annika blir lei", instantWin: false, happened: false },
   {
     event: "X kommanderer folk i bildeproduksjon",
     instantWin: false,
@@ -31,7 +31,7 @@ const data: SquareDraft[] = [
     happened: false,
   },
   {
-    event: "Bestefar og pappa blir uenige om noe annet",
+    event: "Bestefar og pappa blir stikk uenige om noe",
     instantWin: false,
     happened: false,
   },
@@ -61,7 +61,7 @@ const data: SquareDraft[] = [
     happened: false,
   },
   {
-    event: "Pappa sier 'lat som dere har det bra!'",
+    event: "Bjørn sier 'lat som dere har det bra!'",
     instantWin: false,
     happened: false,
   },
@@ -77,6 +77,81 @@ const data: SquareDraft[] = [
   },
   {
     event: "Bestefar sier 'aaaaaaghhh!'",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Magnus imiterer noen",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Pappa snakker med lys stemme",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "De krangler om regninga",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bjørn maser på noe som allerede blir gjort",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Noen bruker uno-reverse card på foreldrene sine",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Randi tar en drink før 12",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Randi reiser seg før hun har sittet i 1 minutt",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestefar bruker lang tid på do",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Vi er 15+ min forsinket",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "'Se på dataen!'",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Bestemor/Bestefar diskuterer klimakrisen med Bjørn",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "EN kommentar fra Magnus fører til WW3",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "vaksineskepsis",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "Maia blir sur pga en vits",
+    instantWin: false,
+    happened: false,
+  },
+  {
+    event: "De voksne synger en sang under middagen",
     instantWin: false,
     happened: false,
   },
