@@ -72,6 +72,9 @@ const SignedIn: FC<Props> = () => {
       <main style={{ marginTop: "6rem" }}>
         <WinnerBanner />
         <Board />
+        <div>
+          <h3>Ikke trykk på rutene før hendelsen har skjedd!</h3>
+        </div>
       </main>
     </div>
   );
