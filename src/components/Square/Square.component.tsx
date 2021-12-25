@@ -9,13 +9,22 @@ interface Props {
   uId?: string;
   sId?: string;
   happened?: boolean;
+  disabled: boolean;
 }
 
-const SquareComponent: FC<Props> = ({ event, uId, sId, happened }) => {
+const SquareComponent: FC<Props> = ({
+  event,
+  uId,
+  sId,
+  happened,
+  disabled,
+}) => {
   if (!event || !uId || !sId) return null;
   const pad = useMediaQuery("(max-width:524px)");
   const cardDimension = pad ? "4rem" : "8rem";
   const dimension = pad ? "2rem" : "4rem";
+
+  console.log("disabled:", disabled);
   return (
     <Card
       raised
@@ -23,7 +32,8 @@ const SquareComponent: FC<Props> = ({ event, uId, sId, happened }) => {
     >
       <ButtonBase
         onClick={() => markAsHappened(uId, sId)}
-        disabled={happened}
+        // disabled if either it has happened or there is a winner
+        disabled={happened || disabled}
         sx={{
           background: happened ? "gold" : "white",
           height: "100%",

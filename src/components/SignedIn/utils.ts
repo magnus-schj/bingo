@@ -1,5 +1,6 @@
 import { Square, SquareDraft } from "../../interfaces";
 
+// data and function for making a board
 const data: SquareDraft[] = [
   { event: "X tar bilder", instantWin: false, happened: false },
   { event: "En runde til", instantWin: false, happened: false },

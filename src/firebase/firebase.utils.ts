@@ -65,3 +65,15 @@ export const markAsHappened = async (uId: string, sId: string) => {
     console.log("error marking square:", error);
   }
 };
+
+// save winnet
+export const saveWinner = async (uid: string | undefined) => {
+  if (!uid) return;
+  const ref = doc(db, "games", "christmas2021");
+  const snapshot = (await getDoc(ref)).data();
+  try {
+    await setDoc(ref, { ...snapshot, winnerID: uid });
+  } catch (error) {
+    console.log("error saving winner:", error);
+  }
+};

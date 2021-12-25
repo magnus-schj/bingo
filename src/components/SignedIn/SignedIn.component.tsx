@@ -4,13 +4,13 @@ import { useAppSelector, useAppDispatch } from "../../App/hookts";
 import { auth, db, saveBoard } from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
-import { collection, onSnapshot, Unsubscribe } from "firebase/firestore";
+import { collection, doc, onSnapshot, Unsubscribe } from "firebase/firestore";
 import {
   resetBoard,
   setBoard,
 } from "../../features/currentUser/currentUser.slice";
-import { Square } from "../../interfaces";
 import Board from "../Board/Board.component";
+import { setWinner } from "../../features/winner/winner.slice";
 
 interface Props {}
 
@@ -18,6 +18,19 @@ const SignedIn: FC<Props> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // listener for winner
+    let winUnsub = onSnapshot(
+      doc(db, "games", "christmas2021"),
+      (document: any) => {
+        const data = document.data();
+        if (data.winnerID) {
+          dispatch(setWinner(data));
+        }
+      }
+    );
+
+    // end of listener for winner
+
     // listener for board
     let unsub: null | Unsubscribe = null;
     if (auth.currentUser) {
@@ -32,9 +45,12 @@ const SignedIn: FC<Props> = () => {
         }
       );
     }
+    // note: board is not saved if it already exists
     auth.currentUser && saveBoard(auth.currentUser, generateBoard());
+    // resets board in reudux when components dismounts
     return () => {
       unsub && unsub();
+      winUnsub();
       dispatch(resetBoard());
     };
   }, []);
