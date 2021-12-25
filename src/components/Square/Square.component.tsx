@@ -22,9 +22,7 @@ const SquareComponent: FC<Props> = ({
   if (!event || !uId || !sId) return null;
   const pad = useMediaQuery("(max-width:524px)");
   const cardDimension = pad ? "4rem" : "8rem";
-  const dimension = pad ? "2rem" : "4rem";
 
-  console.log("disabled:", disabled);
   return (
     <Card
       raised

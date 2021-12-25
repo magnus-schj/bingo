@@ -15,7 +15,6 @@ export const winnerSlice = createSlice({
   initialState,
   reducers: {
     setWinner(state, { payload }) {
-      console.log("payload:", payload);
       state.uid = payload.winnerID;
       state.game = payload.name;
     },

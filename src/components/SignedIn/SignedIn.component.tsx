@@ -11,6 +11,7 @@ import {
 } from "../../features/currentUser/currentUser.slice";
 import Board from "../Board/Board.component";
 import { setWinner } from "../../features/winner/winner.slice";
+import WinnerBanner from "../WinnerBanner.component";
 
 interface Props {}
 
@@ -69,6 +70,7 @@ const SignedIn: FC<Props> = () => {
         </Toolbar>
       </AppBar>
       <main style={{ marginTop: "6rem" }}>
+        <WinnerBanner />
         <Board />
       </main>
     </div>

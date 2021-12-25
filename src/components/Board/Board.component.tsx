@@ -30,7 +30,6 @@ const Board: FC<Props> = () => {
       setLoaded(true);
       // checks if user has won
       if (hasUserWon(matrixToArray(board))) {
-        console.log("winner!");
         saveWinner(currentUserSlice.userInfo?.uid);
       }
     } else setLoaded(false);
