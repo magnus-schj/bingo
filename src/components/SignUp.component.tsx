@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-
+import { SignUpForm } from "../interfaces";
 import { useForm } from "../customHooks";
+import "../baseStyles.css";
 
-import { Card, TextField, Typography, Button } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase.utils";
-import { SignUpForm } from "../interfaces";
 
+import { Card, TextField, Typography, Button } from "@mui/material";
 interface Props {}
 
 const SignUp: FC<Props> = () => {
@@ -34,11 +34,11 @@ const SignUp: FC<Props> = () => {
     }
   };
   return (
-    <Card className="form-container">
+    <Card className="base-container">
       <Typography variant="h3" color="initial">
         Registrer deg
       </Typography>
-      <form>
+      <form className="base-container">
         <TextField
           variant="filled"
           // values
