@@ -12,7 +12,7 @@ const SignIn: FC<Props> = () => {
 
   return (
     <Card className="form-container">
-      {/* <Typography variant="h3" color="initial">
+      <Typography variant="h3" color="initial">
         Logg inn
       </Typography>
       <TextField

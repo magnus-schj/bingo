@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 
 import "./SignInAndSignUp.styles.css";
-import { Button, Card, TextField, Typography } from "@mui/material";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { Typography } from "@mui/material";
 import SignUp from "../SignUp.component";
 import SignIn from "../SignIn.component";
 
@@ -15,7 +14,7 @@ const SignInAndSignUp: FC<Props> = () => {
         Bingo
       </Typography>
       <SignIn />
-      {/* <SignUp /> */}
+      <SignUp />
     </div>
   );
 };

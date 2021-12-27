@@ -85,7 +85,8 @@ export const createUserProfileDocument = async (
     } catch (error) {
       console.log("error saving user:", error);
     }
-
+  }
+};
 // save winner
 export const saveWinner = async (uid: string | undefined) => {
   if (!uid) return;
@@ -95,6 +96,5 @@ export const saveWinner = async (uid: string | undefined) => {
     await setDoc(ref, { ...snapshot, winnerID: uid });
   } catch (error) {
     console.log("error saving winner:", error);
-
   }
 };
