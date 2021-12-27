@@ -1,16 +1,17 @@
 import React, { FC } from "react";
-
+import { SignUpForm } from "../interfaces";
 import { useForm } from "../customHooks";
+import "../baseStyles.css";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
 
 import { Card, TextField, Typography, Button } from "@mui/material";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase.utils";
-import { SignUpForm } from "../interfaces";
-
 interface Props {}
 
 const SignUp: FC<Props> = () => {
   const initialState: SignUpForm = {
+    displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -28,17 +29,27 @@ const SignUp: FC<Props> = () => {
         values.email,
         values.password
       );
-      console.log("suskess!", user);
+      const { displayName } = values;
+      createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.log("error creating user:", error);
     }
   };
   return (
-    <Card className="form-container">
+    <Card className="base-container">
       <Typography variant="h3" color="initial">
         Registrer deg
       </Typography>
-      <form>
+      <form className="base-container">
+        <TextField
+          variant="filled"
+          // values
+          id="displayName"
+          label="Navn"
+          name="displayName"
+          value={values.displayName}
+          onChange={handleChange}
+        />
         <TextField
           variant="filled"
           // values
@@ -49,6 +60,7 @@ const SignUp: FC<Props> = () => {
           value={values.email}
           onChange={handleChange}
         />
+
         <TextField
           variant="filled"
           // values

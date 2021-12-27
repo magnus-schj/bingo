@@ -66,7 +66,27 @@ export const markAsHappened = async (uId: string, sId: string) => {
   }
 };
 
-// save winnet
+// create user profile document
+
+export const createUserProfileDocument = async (
+  user: User | null,
+  otherData: any
+) => {
+  if (!user) return;
+  const ref = doc(db, "users", user.uid);
+
+  const snapShot = await getDoc(ref);
+
+  if (!snapShot.exists()) {
+    const { displayName, email } = user;
+    const createdAt = new Date();
+    try {
+      await setDoc(ref, { displayName, email, createdAt, ...otherData });
+    } catch (error) {
+      console.log("error saving user:", error);
+    }
+
+// save winner
 export const saveWinner = async (uid: string | undefined) => {
   if (!uid) return;
   const ref = doc(db, "games", "christmas2021");
@@ -75,5 +95,6 @@ export const saveWinner = async (uid: string | undefined) => {
     await setDoc(ref, { ...snapshot, winnerID: uid });
   } catch (error) {
     console.log("error saving winner:", error);
+
   }
 };
