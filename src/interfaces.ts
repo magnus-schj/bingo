@@ -9,6 +9,7 @@ export interface Square extends SquareDraft {
 }
 
 export interface SignUpForm {
+  displayName: string;
   email: string;
   password: string;
   confirmPassword: string;

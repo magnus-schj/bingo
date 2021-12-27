@@ -4,13 +4,14 @@ import { useForm } from "../customHooks";
 import "../baseStyles.css";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
 
 import { Card, TextField, Typography, Button } from "@mui/material";
 interface Props {}
 
 const SignUp: FC<Props> = () => {
   const initialState: SignUpForm = {
+    displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -28,6 +29,8 @@ const SignUp: FC<Props> = () => {
         values.email,
         values.password
       );
+      const { displayName } = values;
+      createUserProfileDocument(user, { displayName });
       console.log("suskess!", user);
     } catch (error) {
       console.log("error creating user:", error);
@@ -42,6 +45,15 @@ const SignUp: FC<Props> = () => {
         <TextField
           variant="filled"
           // values
+          id="displayName"
+          label="Navn"
+          name="displayName"
+          value={values.displayName}
+          onChange={handleChange}
+        />
+        <TextField
+          variant="filled"
+          // values
           id="email"
           label="epost"
           name="email"
@@ -49,6 +61,7 @@ const SignUp: FC<Props> = () => {
           value={values.email}
           onChange={handleChange}
         />
+
         <TextField
           variant="filled"
           // values

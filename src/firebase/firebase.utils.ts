@@ -68,7 +68,10 @@ export const markAsHappened = async (uId: string, sId: string) => {
 
 // create user profile document
 
-export const createUserProfileDocument = async (user: User | null) => {
+export const createUserProfileDocument = async (
+  user: User | null,
+  otherData
+) => {
   if (!user) return;
   const ref = doc(db, "users", user.uid);
 
@@ -78,7 +81,7 @@ export const createUserProfileDocument = async (user: User | null) => {
     const { displayName, email } = user;
     const createdAt = new Date();
     try {
-      await setDoc(ref, { displayName, email, createdAt });
+      await setDoc(ref, { displayName, email, createdAt, ...otherData });
     } catch (error) {
       console.log("error saving user:", error);
     }

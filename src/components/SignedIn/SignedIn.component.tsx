@@ -19,19 +19,21 @@ import Board from "../Board/Board.component";
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
+  const { currentUser } = auth;
   const dispatch = useAppDispatch();
   useEffect(() => {
-    // creates a user document of there is none
-    createUserProfileDocument(auth.currentUser);
+    //if  creates a user document of there is none
+    if (currentUser && currentUser.providerData[0].providerId === "google.com")
+      createUserProfileDocument(currentUser);
 
     // makes a board, saves it if the is no other board
-    auth.currentUser && saveBoard(auth.currentUser, generateBoard());
+    currentUser && saveBoard(currentUser, generateBoard());
 
     // listener for board
     let unsub: null | Unsubscribe = null;
-    if (auth.currentUser) {
+    if (currentUser) {
       unsub = onSnapshot(
-        collection(db, "boards", auth.currentUser.uid, "squares"),
+        collection(db, "boards", currentUser.uid, "squares"),
         (querySnapShot) => {
           const board: any = [];
           querySnapShot.forEach((doc) =>
