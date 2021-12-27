@@ -24,7 +24,9 @@ const SignedIn: FC<Props> = () => {
   useEffect(() => {
     //if  creates a user document of there is none
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
-      createUserProfileDocument(currentUser);
+      createUserProfileDocument(currentUser, {
+        displayName: currentUser.displayName,
+      });
 
     // makes a board, saves it if the is no other board
     currentUser && saveBoard(currentUser, generateBoard());

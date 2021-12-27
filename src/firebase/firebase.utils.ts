@@ -70,7 +70,7 @@ export const markAsHappened = async (uId: string, sId: string) => {
 
 export const createUserProfileDocument = async (
   user: User | null,
-  otherData
+  otherData: any
 ) => {
   if (!user) return;
   const ref = doc(db, "users", user.uid);
