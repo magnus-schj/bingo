@@ -12,7 +12,7 @@ const SignIn: FC<Props> = () => {
 
   return (
     <Card className="form-container">
-      <Typography variant="h3" color="initial">
+      {/* <Typography variant="h3" color="initial">
         Logg inn
       </Typography>
       <TextField
@@ -34,6 +34,7 @@ const SignIn: FC<Props> = () => {
         value={values.password}
         onChange={handleChange}
       />
+
       <Button
         variant="contained"
         onClick={() =>
@@ -42,9 +43,13 @@ const SignIn: FC<Props> = () => {
       >
         Logg inn
       </Button>
+
       <Button variant="contained" onClick={() => signInWithGoogle()}>
         Fortsett med Google
       </Button>
+      <Typography variant="subtitle1" color="initial">
+        Det kommer mer senere...
+      </Typography>
     </Card>
   );
 };
