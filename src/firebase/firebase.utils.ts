@@ -65,3 +65,22 @@ export const markAsHappened = async (uId: string, sId: string) => {
     console.log("error marking square:", error);
   }
 };
+
+// create user profile document
+
+export const createUserProfileDocument = async (user: User | null) => {
+  if (!user) return;
+  const ref = doc(db, "users", user.uid);
+
+  const snapShot = await getDoc(ref);
+
+  if (!snapShot.exists()) {
+    const { displayName, email } = user;
+    const createdAt = new Date();
+    try {
+      await setDoc(ref, { displayName, email, createdAt });
+    } catch (error) {
+      console.log("error saving user:", error);
+    }
+  }
+};

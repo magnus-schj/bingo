@@ -1,7 +1,12 @@
 import React, { FC, useEffect } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../App/hookts";
-import { auth, db, saveBoard } from "../../firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  db,
+  saveBoard,
+} from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
 import { collection, onSnapshot, Unsubscribe } from "firebase/firestore";
@@ -9,15 +14,19 @@ import {
   resetBoard,
   setBoard,
 } from "../../features/currentUser/currentUser.slice";
-import { Square } from "../../interfaces";
 import Board from "../Board/Board.component";
 
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
+    // creates a user document of there is none
+    createUserProfileDocument(auth.currentUser);
+
+    // makes a board, saves it if the is no other board
+    auth.currentUser && saveBoard(auth.currentUser, generateBoard());
+
     // listener for board
     let unsub: null | Unsubscribe = null;
     if (auth.currentUser) {
@@ -32,7 +41,6 @@ const SignedIn: FC<Props> = () => {
         }
       );
     }
-    auth.currentUser && saveBoard(auth.currentUser, generateBoard());
     return () => {
       unsub && unsub();
       dispatch(resetBoard());
