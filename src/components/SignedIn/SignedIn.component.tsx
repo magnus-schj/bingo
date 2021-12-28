@@ -50,7 +50,6 @@ const SignedIn: FC<Props> = () => {
         }
       }
     );
-
     // end of listener for winner
 
     // listener for board

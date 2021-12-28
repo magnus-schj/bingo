@@ -18,13 +18,13 @@ const WinnerBanner: FC<Props> = () => {
   const winnerSlice = useAppSelector((state) => state.winner);
 
   useEffect(() => {
+    // gets document for person who has
     const fetchData = async () => {
       const userData = await getUserData(winnerSlice.uid);
       setWinnerInfo(userData);
-      console.log("data:", userData);
     };
     fetchData();
-  }, []);
+  }, [winnerSlice]);
   return winnerSlice.uid && winnerInfo ? (
     <div style={{ margin: "auto", textAlign: "center" }}>
       <Confetti />

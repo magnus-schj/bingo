@@ -1,0 +1,9 @@
+@use "../../baseStyles.scss";
+
+.form-wrapper {
+  @extend .base-container;
+  padding: 1rem;
+  min-height: 349px;
+  margin: 1rem;
+  justify-content: space-between;
+}
