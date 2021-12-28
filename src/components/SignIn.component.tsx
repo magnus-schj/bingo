@@ -11,7 +11,7 @@ const SignIn: FC<Props> = () => {
   const [values, handleChange, setValues] = useForm(initialState);
 
   return (
-    <Card className="form-container">
+    <Card className="base-container">
       <Typography variant="h3" color="initial">
         Logg inn
       </Typography>

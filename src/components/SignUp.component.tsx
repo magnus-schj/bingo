@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { SignUpForm } from "../interfaces";
 import { useForm } from "../customHooks";
-import "../baseStyles.css";
+import "../baseStyles.scss";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
