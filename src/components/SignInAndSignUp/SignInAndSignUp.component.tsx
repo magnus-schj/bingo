@@ -13,7 +13,7 @@ const SignInAndSignUp: FC<Props> = () => {
       <Typography variant="h3" color="initial">
         Bingo
       </Typography>
-      <div className="form-container">
+      <div className="forms-container">
         <SignIn />
         <SignUp />
       </div>
