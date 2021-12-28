@@ -1,7 +1,12 @@
 import React, { FC, useEffect } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../App/hookts";
-import { auth, db, saveBoard } from "../../firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  db,
+  saveBoard,
+} from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
 import { collection, doc, onSnapshot, Unsubscribe } from "firebase/firestore";
@@ -16,9 +21,19 @@ import WinnerBanner from "../WinnerBanner.component";
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
+  const { currentUser } = auth;
   const dispatch = useAppDispatch();
-
   useEffect(() => {
+
+    //if  creates a user document of there is none
+    if (currentUser && currentUser.providerData[0].providerId === "google.com")
+      createUserProfileDocument(currentUser, {
+        displayName: currentUser.displayName,
+      });
+
+    // makes a board, saves it if the is no other board
+    currentUser && saveBoard(currentUser, generateBoard());
+
     // listener for winner
     let winUnsub = onSnapshot(
       doc(db, "games", "christmas2021"),
@@ -32,11 +47,12 @@ const SignedIn: FC<Props> = () => {
 
     // end of listener for winner
 
+
     // listener for board
     let unsub: null | Unsubscribe = null;
-    if (auth.currentUser) {
+    if (currentUser) {
       unsub = onSnapshot(
-        collection(db, "boards", auth.currentUser.uid, "squares"),
+        collection(db, "boards", currentUser.uid, "squares"),
         (querySnapShot) => {
           const board: any = [];
           querySnapShot.forEach((doc) =>
@@ -46,9 +62,11 @@ const SignedIn: FC<Props> = () => {
         }
       );
     }
+
     // note: board is not saved if it already exists
     auth.currentUser && saveBoard(auth.currentUser, generateBoard());
     // resets board in reudux when components dismounts
+
     return () => {
       unsub && unsub();
       winUnsub();

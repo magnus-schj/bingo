@@ -1,0 +1,8 @@
+@use "../../baseStyles.scss";
+
+.forms-container {
+  @extend .base-container-horizontal;
+  flex-wrap: wrap;
+  width: 80%;
+  justify-content: space-around;
+}

@@ -1,14 +1,12 @@
-.sign-in-and-sign-up {
+.base-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.form-container {
+.base-container-horizontal {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
 }

@@ -9,6 +9,8 @@ import {
 } from "./features/currentUser/currentUser.slice";
 import { auth } from "./firebase/firebase.utils";
 
+import "./baseStyles.scss";
+
 function App() {
   const dispatch = useAppDispatch();
 

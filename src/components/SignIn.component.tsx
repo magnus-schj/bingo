@@ -1,16 +1,18 @@
 import { Card, Typography, TextField, Button } from "@mui/material";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { FC } from "react";
 import { useForm } from "../customHooks";
-import { signInWithGoogle } from "../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../firebase/firebase.utils";
 
 interface Props {}
 
 const SignIn: FC<Props> = () => {
   const initialState = { email: "", password: "" };
   const [values, handleChange, setValues] = useForm(initialState);
+
   return (
-    <Card className="form-container">
-      {/* <Typography variant="h3" color="initial">
+    <Card className="base-container">
+      <Typography variant="h3" color="initial">
         Logg inn
       </Typography>
       <TextField
@@ -32,7 +34,16 @@ const SignIn: FC<Props> = () => {
         value={values.password}
         onChange={handleChange}
       />
-      <Button variant="contained">Logg inn</Button> */}
+
+      <Button
+        variant="contained"
+        onClick={() =>
+          signInWithEmailAndPassword(auth, values.email, values.password)
+        }
+      >
+        Logg inn
+      </Button>
+
       <Button variant="contained" onClick={() => signInWithGoogle()}>
         Fortsett med Google
       </Button>
