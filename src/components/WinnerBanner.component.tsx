@@ -1,19 +1,35 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useAppSelector } from "../App/hookts";
 import Confetti from "./confetti/Confetti.component";
 import Typography from "@mui/material/Typography";
+import { getUserData } from "../firebase/firebase.utils";
+import { DocumentData } from "firebase/firestore";
 
 interface Props {}
 
 const WinnerBanner: FC<Props> = () => {
+  // state
+  const initialState = null;
+  const [winnerInfo, setWinnerInfo] = useState<DocumentData | null>(
+    initialState
+  );
+
   // selectors
   const winnerSlice = useAppSelector((state) => state.winner);
 
-  return winnerSlice.uid ? (
+  useEffect(() => {
+    // gets document for person who has
+    const fetchData = async () => {
+      const userData = await getUserData(winnerSlice.uid);
+      setWinnerInfo(userData);
+    };
+    fetchData();
+  }, [winnerSlice]);
+  return winnerSlice.uid && winnerInfo ? (
     <div style={{ margin: "auto", textAlign: "center" }}>
       <Confetti />
       <Typography variant="h2" color="initial">
-        Noen har vunnet!
+        {winnerInfo.displayName} har vunnet!
       </Typography>
     </div>
   ) : null;

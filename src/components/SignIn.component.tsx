@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { FC } from "react";
 import { useForm } from "../customHooks";
 import { auth, signInWithGoogle } from "../firebase/firebase.utils";
+import FormWrapper from "./FormWrapper/FormWrapper.component";
 
 interface Props {}
 
@@ -11,30 +12,31 @@ const SignIn: FC<Props> = () => {
   const [values, handleChange, setValues] = useForm(initialState);
 
   return (
-    <Card className="base-container">
+    <FormWrapper>
       <Typography variant="h3" color="initial">
         Logg inn
       </Typography>
-      <TextField
-        variant="filled"
-        // values
-        id="email"
-        label="epost"
-        name="email"
-        value={values.email}
-        onChange={handleChange}
-      />
-      <TextField
-        variant="filled"
-        // values
-        id="password"
-        label="password"
-        name="password"
-        type="password"
-        value={values.password}
-        onChange={handleChange}
-      />
-
+      <div className="base-container">
+        <TextField
+          variant="filled"
+          // values
+          id="email"
+          label="epost"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+        />
+        <TextField
+          variant="filled"
+          // values
+          id="password"
+          label="password"
+          name="password"
+          type="password"
+          value={values.password}
+          onChange={handleChange}
+        />
+      </div>
       <Button
         variant="contained"
         onClick={() =>
@@ -44,13 +46,22 @@ const SignIn: FC<Props> = () => {
         Logg inn
       </Button>
 
-      <Button variant="contained" onClick={() => signInWithGoogle()}>
+      <Button
+        variant="contained"
+        onClick={() => signInWithGoogle()}
+        sx={{
+          background: "hsl(5, 69%, 54%)",
+          ":hover": {
+            background: "hsl(30,90%,60%)",
+          },
+        }}
+      >
         Fortsett med Google
       </Button>
       <Typography variant="subtitle1" color="initial">
         Det kommer mer senere...
       </Typography>
-    </Card>
+    </FormWrapper>
   );
 };
 

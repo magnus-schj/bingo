@@ -7,6 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, createUserProfileDocument } from "../firebase/firebase.utils";
 
 import { Card, TextField, Typography, Button } from "@mui/material";
+import FormWrapper from "./FormWrapper/FormWrapper.component";
 interface Props {}
 
 const SignUp: FC<Props> = () => {
@@ -36,11 +37,11 @@ const SignUp: FC<Props> = () => {
     }
   };
   return (
-    <Card className="base-container">
+    <FormWrapper>
       <Typography variant="h3" color="initial">
         Registrer deg
       </Typography>
-      <form className="base-container">
+      <div className="base-container">
         <TextField
           variant="filled"
           // values
@@ -54,7 +55,7 @@ const SignUp: FC<Props> = () => {
           variant="filled"
           // values
           id="email"
-          label="epost"
+          label="Epost"
           name="email"
           type="email"
           value={values.email}
@@ -65,7 +66,7 @@ const SignUp: FC<Props> = () => {
           variant="filled"
           // values
           id="password"
-          label="password"
+          label="Passord"
           name="password"
           type="password"
           value={values.password}
@@ -81,11 +82,11 @@ const SignUp: FC<Props> = () => {
           value={values.confirmPassword}
           onChange={handleChange}
         />
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          Submit
-        </Button>
-      </form>
-    </Card>
+      </div>
+      <Button variant="contained" color="primary" onClick={handleClick}>
+        Submit
+      </Button>
+    </FormWrapper>
   );
 };
 
