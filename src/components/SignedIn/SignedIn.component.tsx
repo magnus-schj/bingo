@@ -9,7 +9,14 @@ import {
 } from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
-import { collection, doc, onSnapshot, Unsubscribe } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  DocumentData,
+  DocumentSnapshot,
+  onSnapshot,
+  Unsubscribe,
+} from "firebase/firestore";
 import {
   resetBoard,
   setBoard,
@@ -24,7 +31,6 @@ const SignedIn: FC<Props> = () => {
   const { currentUser } = auth;
   const dispatch = useAppDispatch();
   useEffect(() => {
-
     //if  creates a user document of there is none
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
       createUserProfileDocument(currentUser, {
@@ -37,16 +43,15 @@ const SignedIn: FC<Props> = () => {
     // listener for winner
     let winUnsub = onSnapshot(
       doc(db, "games", "christmas2021"),
-      (document: any) => {
+      (document: DocumentSnapshot<DocumentData>) => {
         const data = document.data();
-        if (data.winnerID) {
+        if (data && data.winnerID) {
           dispatch(setWinner(data));
         }
       }
     );
 
     // end of listener for winner
-
 
     // listener for board
     let unsub: null | Unsubscribe = null;
@@ -65,7 +70,7 @@ const SignedIn: FC<Props> = () => {
 
     // note: board is not saved if it already exists
     auth.currentUser && saveBoard(auth.currentUser, generateBoard());
-    // resets board in reudux when components dismounts
+    // resets board in redux when components dismounts
 
     return () => {
       unsub && unsub();

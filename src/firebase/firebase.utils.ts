@@ -98,3 +98,12 @@ export const saveWinner = async (uid: string | undefined) => {
     console.log("error saving winner:", error);
   }
 };
+
+// get user
+export const getUserData = async (uid: string | null) => {
+  if (!uid) return null;
+  const ref = doc(db, "users", uid);
+  const snapShot = await getDoc(ref);
+  if (!snapShot.exists()) return null;
+  return snapShot.data();
+};
