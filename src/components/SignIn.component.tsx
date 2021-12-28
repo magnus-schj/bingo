@@ -46,7 +46,16 @@ const SignIn: FC<Props> = () => {
         Logg inn
       </Button>
 
-      <Button variant="contained" onClick={() => signInWithGoogle()}>
+      <Button
+        variant="contained"
+        onClick={() => signInWithGoogle()}
+        sx={{
+          background: "hsl(5, 69%, 54%)",
+          ":hover": {
+            background: "hsl(30,90%,60%)",
+          },
+        }}
+      >
         Fortsett med Google
       </Button>
       <Typography variant="subtitle1" color="initial">
