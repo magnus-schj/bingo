@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
@@ -11,22 +12,34 @@ import {
 import { Square } from "../interfaces";
 import { v4 } from "uuid";
 
-// ! firebase basic config
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-var firebaseConfig = {
-  apiKey: "AIzaSyAXuVMbb0DRNgu0t6_GtXZ-sOWl8m5UG-w",
-  authDomain: "bingo-5823c.firebaseapp.com",
-  projectId: "bingo-5823c",
-  storageBucket: "bingo-5823c.appspot.com",
-  messagingSenderId: "157826535010",
-  appId: "1:157826535010:web:7fee7e9ff01cdd9bbe0b3b",
-  measurementId: "G-FN1FHWNFT9",
-};
-// Initialize Firebase
-initializeApp(firebaseConfig);
-// firebase.analytics();
+// TODO: Add SDKs for Firebase products that you want to use
 
-// ! --------
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCNlRWsb3K2MTZL-UsqvBXkR1mTaLkVLYM",
+
+  authDomain: "bingo-dev-27752.firebaseapp.com",
+
+  projectId: "bingo-dev-27752",
+
+  storageBucket: "bingo-dev-27752.appspot.com",
+
+  messagingSenderId: "500491440168",
+
+  appId: "1:500491440168:web:4afd78e3dd588d7d64e51d",
+
+  measurementId: "G-Q8997ZGSEW",
+};
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const analytics = getAnalytics(app);
 export const auth = getAuth();
 export const db = getFirestore();
 
