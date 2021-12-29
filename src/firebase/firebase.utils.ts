@@ -37,9 +37,7 @@ export const signInWithGoogle = () => signInWithPopup(auth, provider);
 // save board
 export const saveBoard = async (userAuth: User, board: Square[]) => {
   const boardref = doc(db, "boards", userAuth.uid);
-
   const snapShot = await getDoc(boardref);
-
   if (!snapShot.exists()) {
     const createdAt = new Date();
     try {
