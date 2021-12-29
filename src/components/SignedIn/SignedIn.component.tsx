@@ -67,8 +67,6 @@ const SignedIn: FC<Props> = () => {
       );
     }
 
-    // note: board is not saved if it already exists
-    auth.currentUser && saveBoard(auth.currentUser, generateBoard());
     // resets board in redux when components dismounts
 
     return () => {
