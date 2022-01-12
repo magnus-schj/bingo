@@ -1,13 +1,31 @@
+import { collection } from "firebase/firestore";
 import React, { FC } from "react";
-import { useAppSelector } from "../App/hookts";
-import SignedIn from "./SignedIn/SignedIn.component";
-import SignInAndSignUp from "./SignInAndSignUp/SignInAndSignUp.component";
+import { Link } from "react-router-dom";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface Props {}
 
 const Root: FC<Props> = () => {
-  const currentUserSlice = useAppSelector((state) => state.currentUser);
-  return currentUserSlice.userInfo ? <SignedIn /> : <SignInAndSignUp />;
+  // get all games
+  const ref = collection(useFirestore(), "games");
+  const { data } = useFirestoreCollectionData(ref);
+  return (
+    <div>
+      <Typography variant="h2" color="initial">
+        Velg fra lista
+      </Typography>
+      {data &&
+        data.map(({ NO_ID_FIELD, name }) => (
+          <Link key={NO_ID_FIELD} to={NO_ID_FIELD}>
+            <Button variant="contained" color="primary">
+              {name}
+            </Button>
+          </Link>
+        ))}
+    </div>
+  );
 };
 
 export default Root;

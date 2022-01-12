@@ -12,9 +12,6 @@ import { auth } from "./firebase/firebase.utils";
 import "./baseStyles.scss";
 import { getFirestore } from "firebase/firestore";
 import { FirestoreProvider, useFirebaseApp } from "reactfire";
-import { Routes, Route } from "react-router-dom";
-import Game from "./components/Game.component";
-import Root from "./components/Root.component";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -39,10 +36,7 @@ function App() {
   return (
     <FirestoreProvider sdk={fireStoreInstance}>
       <div className="App">
-        <Routes>
-          <Route path="/" element={<Root />} />
-          <Route path=":gameId" element={<Game />} />
-        </Routes>
+        {currentUserSlice.userInfo ? <SignedIn /> : <SignInAndSignUp />}
       </div>
     </FirestoreProvider>
   );
