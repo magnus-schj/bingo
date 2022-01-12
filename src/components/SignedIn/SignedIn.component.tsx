@@ -9,71 +9,31 @@ import {
 } from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
+
+import { resetBoard } from "../../features/currentUser/currentUser.slice";
 import {
-  collection,
-  doc,
-  DocumentData,
-  DocumentSnapshot,
-  onSnapshot,
-  Unsubscribe,
-} from "firebase/firestore";
-import {
-  resetBoard,
-  setBoard,
-} from "../../features/currentUser/currentUser.slice";
-import Board from "../Board/Board.component";
-import { setWinner } from "../../features/winner/winner.slice";
-import WinnerBanner from "../WinnerBanner.component";
+  useFirestore,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from "reactfire";
+import { collection, doc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
   const { currentUser } = auth;
   const dispatch = useAppDispatch();
+
+  // get all games
+  const ref = collection(useFirestore(), "games");
+  const { status, data } = useFirestoreCollectionData(ref);
   useEffect(() => {
     //if  creates a user document of there is none
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
       createUserProfileDocument(currentUser, {
         displayName: currentUser.displayName,
       });
-
-    // makes a board, saves it if the is no other board
-    currentUser && saveBoard(currentUser, generateBoard());
-
-    // listener for winner
-    let winUnsub = onSnapshot(
-      doc(db, "games", "christmas2021"),
-      (document: DocumentSnapshot<DocumentData>) => {
-        const data = document.data();
-        if (data && data.winnerID) {
-          dispatch(setWinner(data));
-        }
-      }
-    );
-    // end of listener for winner
-
-    // listener for board
-    let unsub: null | Unsubscribe = null;
-    if (currentUser) {
-      unsub = onSnapshot(
-        collection(db, "boards", currentUser.uid, "squares"),
-        (querySnapShot) => {
-          const board: any = [];
-          querySnapShot.forEach((doc) =>
-            board.push({ id: doc.id, ...doc.data() })
-          );
-          dispatch(setBoard(board));
-        }
-      );
-    }
-
-    // resets board in redux when components dismounts
-
-    return () => {
-      unsub && unsub();
-      winUnsub();
-      dispatch(resetBoard());
-    };
   }, []);
 
   return (
@@ -89,12 +49,14 @@ const SignedIn: FC<Props> = () => {
           </Button>
         </Toolbar>
       </AppBar>
+
       <main style={{ marginTop: "6rem" }}>
-        <WinnerBanner />
-        <Board />
-        <div>
-          <h3>Ikke trykk på rutene før hendelsen har skjedd!</h3>
-        </div>
+        {data &&
+          data.map(({ NO_ID_FIELD, name }) => (
+            <Link key={NO_ID_FIELD} to={NO_ID_FIELD}>
+              {name}
+            </Link>
+          ))}
       </main>
     </div>
   );

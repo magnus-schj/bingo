@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
+import { allGamesSlice } from "../features/allGames/allGames.Slice";
 import { currentUserSlice } from "../features/currentUser/currentUser.slice";
-import { winnerSlice } from "../features/winner/winner.slice";
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserSlice.reducer,
-    winner: winnerSlice.reducer,
+    allGames: allGamesSlice.reducer,
   },
   middleware: [thunk],
 });

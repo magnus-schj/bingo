@@ -19,7 +19,7 @@ import { v4 } from "uuid";
 // Your web app's Firebase configuration
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCNlRWsb3K2MTZL-UsqvBXkR1mTaLkVLYM",
 
   authDomain: "bingo-dev-27752.firebaseapp.com",
@@ -48,7 +48,11 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 // save board
-export const saveBoard = async (userAuth: User, board: Square[]) => {
+export const saveBoard = async (
+  userAuth: User,
+  gameID: string,
+  board: Square[]
+) => {
   const boardref = doc(db, "boards", userAuth.uid);
   const snapShot = await getDoc(boardref);
   if (!snapShot.exists()) {
