@@ -1,4 +1,5 @@
 import { Square } from "../../interfaces";
+import { DIMENSION } from "../SignedIn/utils";
 
 export const matrixNotNull = (matrix: Square[][] | null) => {
   if (!matrix) return false;
@@ -22,6 +23,21 @@ export const matrixToArray = (matrix: any[][]) => {
     });
   });
   return array;
+};
+
+export const arrayToMatrix = (array: any[]) => {
+  // fills board with rows
+  const board: Square[][] = [];
+  while (board.length < DIMENSION) {
+    // fills row with squares
+    const row: Square[] = [];
+    while (row.length < DIMENSION) {
+      const square = array[board.length * DIMENSION + row.length];
+      row.push(square);
+    }
+    board.push(row);
+  }
+  return board;
 };
 
 export const hasUserWon = (squares: Square[]) => {

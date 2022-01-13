@@ -1,7 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 
 import {
   getAuth,
@@ -50,17 +56,25 @@ export const signInWithGoogle = () => signInWithPopup(auth, provider);
 // save board
 export const saveBoard = async (
   userAuth: User,
-  gameID: string,
+  gameId: string,
   board: Square[]
 ) => {
-  const boardref = doc(db, "boards", userAuth.uid);
+  const boardref = doc(db, "games", gameId, "boards", userAuth.uid);
   const snapShot = await getDoc(boardref);
   if (!snapShot.exists()) {
-    const createdAt = new Date();
+    const createdAt = serverTimestamp();
     try {
       await setDoc(boardref, { createdAt });
       board.forEach(async (square) => {
-        const squareRef = doc(db, "boards", userAuth.uid, "squares", v4());
+        const squareRef = doc(
+          db,
+          "games",
+          gameId,
+          "boards",
+          userAuth.uid,
+          "squares",
+          v4()
+        );
         await setDoc(squareRef, square);
       });
     } catch (error) {
@@ -70,9 +84,9 @@ export const saveBoard = async (
 };
 
 // mark square
-export const markAsHappened = async (uId: string, sId: string) => {
-  const ref = doc(db, "boards", uId, "squares", sId);
-  const snapshot = await (await getDoc(ref)).data();
+export const markAsHappened = async (gId: string, uId: string, sId: string) => {
+  const ref = doc(db, "games", gId, "boards", uId, "squares", sId);
+  const snapshot = (await getDoc(ref)).data();
 
   try {
     await setDoc(ref, { ...snapshot, happened: true });

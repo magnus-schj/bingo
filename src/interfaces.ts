@@ -4,7 +4,7 @@ export interface SquareDraft {
   happened: boolean;
 }
 export interface Square extends SquareDraft {
-  id?: string;
+  NO_ID_FIELD?: string;
   index?: number;
 }
 
