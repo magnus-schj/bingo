@@ -10,12 +10,15 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  useTheme,
 } from "@mui/material";
 import FormWrapper from "./FormWrapper/FormWrapper.component";
 
 interface Props {}
 
 const Root: FC<Props> = () => {
+  // theme hook
+  const theme = useTheme();
   // history from react-router-dom
   const navigate = useNavigate();
   // get all games
@@ -30,7 +33,7 @@ const Root: FC<Props> = () => {
         <List
           sx={{
             width: "100%",
-            background: "#dbdddc",
+            background: theme.palette.background.paper,
           }}
         >
           <nav aria-label="game">
