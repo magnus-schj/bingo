@@ -1,15 +1,14 @@
 import { useMediaQuery } from "@mui/material";
 import { collection, doc } from "firebase/firestore";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import {
   useFirestore,
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
-import { auth, db, saveBoard, saveWinner } from "../../firebase/firebase.utils";
+import { auth, saveBoard, saveWinner } from "../../firebase/firebase.utils";
 import { generateBoard } from "../SignedIn/utils";
 import SquareComponent from "../Square/Square.component";
-import WinnerBanner from "../WinnerBanner.component";
 
 import "./Board.styles.css";
 import { arrayToMatrix, hasUserWon } from "./utils";
@@ -63,7 +62,7 @@ const Board: FC<Props> = ({ gameId }) => {
                 key={NO_ID_FIELD}
                 uId={currentUser.uid}
                 sId={NO_ID_FIELD}
-                disabled={gameRes.data.winnerID}
+                disabled={gameRes.data.winnerID != null}
                 gameId={gameId}
                 {...otherData}
               />
