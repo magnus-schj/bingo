@@ -1,30 +1,6 @@
 import { Square } from "../../interfaces";
 import { DIMENSION } from "../SignedIn/utils";
 
-export const matrixNotNull = (matrix: Square[][] | null) => {
-  if (!matrix) return false;
-  //   is not empty til the oposite is proved
-  let notEmpty = true;
-  matrix.forEach((row) =>
-    row.forEach((square) => {
-      if (!square) {
-        notEmpty = false;
-      }
-    })
-  );
-  return notEmpty;
-};
-
-export const matrixToArray = (matrix: any[][]) => {
-  const array: any[] = [];
-  matrix.forEach((row) => {
-    row.forEach((element) => {
-      array.push(element);
-    });
-  });
-  return array;
-};
-
 export const arrayToMatrix = (array: any[]) => {
   // fills board with rows
   const board: Square[][] = [];

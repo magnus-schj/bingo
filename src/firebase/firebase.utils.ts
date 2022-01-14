@@ -117,9 +117,9 @@ export const createUserProfileDocument = async (
   }
 };
 // save winner
-export const saveWinner = async (uid: string | undefined) => {
+export const saveWinner = async (uid: string | undefined, gameId: string) => {
   if (!uid) return;
-  const ref = doc(db, "games", "christmas2021");
+  const ref = doc(db, "games", gameId);
   const snapshot = (await getDoc(ref)).data();
   try {
     await setDoc(ref, { ...snapshot, winnerID: uid });

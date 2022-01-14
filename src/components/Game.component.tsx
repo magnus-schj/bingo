@@ -2,8 +2,8 @@ import { doc } from "firebase/firestore";
 import React, { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
-import { auth } from "../firebase/firebase.utils";
 import Board from "./Board/Board.component";
+import WinnerBanner from "./WinnerBanner.component";
 
 interface Props {}
 
@@ -22,6 +22,7 @@ const Game: FC<Props> = () => {
 
   return data ? (
     <div>
+      {data.winnerID && <WinnerBanner winnerID={data.winnerID} />}
       <h1>{data.name}</h1>
       <Board gameId={gameId} />
     </div>

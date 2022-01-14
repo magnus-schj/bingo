@@ -3,33 +3,21 @@ import { useAppSelector } from "../App/hookts";
 import Confetti from "./confetti/Confetti.component";
 import Typography from "@mui/material/Typography";
 import { getUserData } from "../firebase/firebase.utils";
-import { DocumentData } from "firebase/firestore";
+import { doc, DocumentData } from "firebase/firestore";
+import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
 
-interface Props {}
+interface Props {
+  winnerID: string;
+}
 
-const WinnerBanner: FC<Props> = () => {
-  // state
-  const initialState = null;
-  const [winnerInfo, setWinnerInfo] = useState<DocumentData | null>(
-    initialState
-  );
-
-  // selectors
-  const winnerSlice = useAppSelector((state) => state.winner);
-
-  useEffect(() => {
-    // gets document for person who has
-    const fetchData = async () => {
-      const userData = await getUserData(winnerSlice.uid);
-      setWinnerInfo(userData);
-    };
-    fetchData();
-  }, [winnerSlice]);
-  return winnerSlice.uid && winnerInfo ? (
+const WinnerBanner: FC<Props> = ({ winnerID }) => {
+  const ref = doc(useFirestore(), "users", winnerID);
+  const { data } = useFirestoreDocData(ref);
+  return data ? (
     <div style={{ margin: "auto", textAlign: "center" }}>
       <Confetti />
       <Typography variant="h2" color="initial">
-        {winnerInfo.displayName} har vunnet!
+        {data.displayName} har vunnet!
       </Typography>
     </div>
   ) : null;
