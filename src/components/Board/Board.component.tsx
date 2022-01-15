@@ -43,10 +43,14 @@ const Board: FC<Props> = ({ gameId }) => {
   const { data }: any = useFirestoreCollectionData(boardRef);
   const dataLoaded = gameRes.data && data && data.length === 16;
   useEffect(() => {
-    // generates boards, saves it if no other exists
-    currentUser && saveBoard(currentUser, gameId, generateBoard());
-    // checks if user hav won
-    if (data && hasUserWon(data)) saveWinner(currentUser.uid, gameId);
+    // generates boards, saves it if no other exists and current length
+    // is 0
+    currentUser &&
+      data &&
+      data.length === 0 &&
+      saveBoard(currentUser, gameId, generateBoard());
+    // checks if user has won
+    if (dataLoaded && hasUserWon(data)) saveWinner(currentUser.uid, gameId);
   }, [data]);
   return (
     <div

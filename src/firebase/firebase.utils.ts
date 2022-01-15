@@ -61,7 +61,7 @@ export const saveBoard = async (
 ) => {
   const boardref = doc(db, "games", gameId, "boards", userAuth.uid);
   const snapShot = await getDoc(boardref);
-  if (!snapShot.exists()) {
+  if (snapShot && !snapShot.exists()) {
     const createdAt = serverTimestamp();
     try {
       await setDoc(boardref, { createdAt });

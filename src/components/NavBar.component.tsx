@@ -11,6 +11,11 @@ const NavBar: FC<Props> = () => {
   const location = useLocation();
   const noRootUrl = location.pathname != "/";
 
+  const handleClick = () => {
+    auth.signOut();
+    navigate("/");
+  };
+
   return (
     <AppBar position="fixed" color="primary">
       <Toolbar>
@@ -22,11 +27,7 @@ const NavBar: FC<Props> = () => {
           )}
         </div>
 
-        <Button
-          variant="contained"
-          color="warning"
-          onClick={() => auth.signOut()}
-        >
+        <Button variant="contained" color="warning" onClick={handleClick}>
           Logg ut
         </Button>
       </Toolbar>

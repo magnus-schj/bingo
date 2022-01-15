@@ -31,7 +31,7 @@ const SignUp: FC<Props> = () => {
         values.password
       );
       const { displayName } = values;
-      createUserProfileDocument(user, { displayName });
+      createUserProfileDocument(user, { displayName, vertified: false });
     } catch (error) {
       console.log("error creating user:", error);
     }

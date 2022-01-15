@@ -24,6 +24,7 @@ const SignedIn: FC<Props> = () => {
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
       createUserProfileDocument(currentUser, {
         displayName: currentUser.displayName,
+        vertified: false,
       });
   }, []);
 
