@@ -11,7 +11,6 @@ const NavBar: FC<Props> = () => {
   const location = useLocation();
   const noRootUrl = location.pathname != "/";
 
-  console.log(noRootUrl);
   return (
     <AppBar position="fixed" color="primary">
       <Toolbar>
