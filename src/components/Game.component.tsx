@@ -21,13 +21,13 @@ const Game: FC<Props> = () => {
   if (urlWrong) return <div>Siden finnes ikke</div>;
 
   return data ? (
-    <div>
+    <div className="base-container">
       {data.winnerID && <WinnerBanner winnerID={data.winnerID} />}
       <h1>{data.name}</h1>
       <Board gameId={gameId} />
     </div>
   ) : (
-    <div>laster...</div>
+    <div>Laster...</div>
   );
 };
 

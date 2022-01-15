@@ -10,16 +10,15 @@ import {
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
 
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useParams, useLocation } from "react-router-dom";
 import Game from "../Game.component";
 import Root from "../Root.component";
+import NavBar from "../NavBar.component";
 
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
   const { currentUser } = auth;
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     //if  creates a user document of there is none
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
@@ -30,17 +29,7 @@ const SignedIn: FC<Props> = () => {
 
   return (
     <div>
-      <AppBar position="fixed" color="primary">
-        <Toolbar>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => auth.signOut()}
-          >
-            Logg ut
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <NavBar />
       <main style={{ marginTop: "6rem" }}>
         <Routes>
           <Route path="/" element={<Root />} />
