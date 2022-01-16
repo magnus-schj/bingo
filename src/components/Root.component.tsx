@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import FormWrapper from "./FormWrapper/FormWrapper.component";
 import { auth } from "../firebase/firebase.utils";
+import NotVertified from "./NotVertified.component";
 
 interface Props {}
 
@@ -34,12 +35,14 @@ const Root: FC<Props> = () => {
   // get all games
   const ref = collection(useFirestore(), "games");
   const { data } = useFirestoreCollectionData(ref);
+  if (!userRes.data) return null;
   return userRes.data.vertified ? (
     <div>
       <FormWrapper>
         <Typography variant="h2" color="initial">
           Velg fra lista
         </Typography>
+
         <List
           sx={{
             width: "100%",
@@ -66,9 +69,7 @@ const Root: FC<Props> = () => {
       </FormWrapper>
     </div>
   ) : (
-    <div>
-      Sorry, du er ikke verifisert enda, send meg melding så fikser jeg det!
-    </div>
+    <NotVertified />
   );
 };
 
