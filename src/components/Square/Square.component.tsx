@@ -36,7 +36,7 @@ const SquareComponent: FC<Props> = ({
   const cardDimension = pad ? "4rem" : "8rem";
 
   const handleUndo = () => {
-    if (!happened) return;
+    if (!happened || disabled) return;
     setHappened(gameId, uId, sId, false);
   };
   return (

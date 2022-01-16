@@ -1,7 +1,11 @@
-import { collection } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import {
+  useFirestore,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from "reactfire";
 import Typography from "@mui/material/Typography";
 import {
   Card,
@@ -13,18 +17,24 @@ import {
   useTheme,
 } from "@mui/material";
 import FormWrapper from "./FormWrapper/FormWrapper.component";
+import { auth } from "../firebase/firebase.utils";
 
 interface Props {}
 
 const Root: FC<Props> = () => {
+  if (!auth.currentUser) return null;
   // theme hook
   const theme = useTheme();
   // history from react-router-dom
   const navigate = useNavigate();
+  // ! firebase
+  // user data
+  const userRef = doc(useFirestore(), "users", auth.currentUser.uid);
+  const userRes = useFirestoreDocData(userRef);
   // get all games
   const ref = collection(useFirestore(), "games");
   const { data } = useFirestoreCollectionData(ref);
-  return (
+  return userRes.data.vertified ? (
     <div>
       <FormWrapper>
         <Typography variant="h2" color="initial">
@@ -54,6 +64,10 @@ const Root: FC<Props> = () => {
           </nav>
         </List>
       </FormWrapper>
+    </div>
+  ) : (
+    <div>
+      Sorry, du er ikke verifisert enda, send meg melding så fikser jeg det!
     </div>
   );
 };
