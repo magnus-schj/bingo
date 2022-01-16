@@ -83,13 +83,18 @@ export const saveBoard = async (
   }
 };
 
-// mark square
-export const markAsHappened = async (gId: string, uId: string, sId: string) => {
+// mark or unmark square
+export const setHappened = async (
+  gId: string,
+  uId: string,
+  sId: string,
+  happened: boolean
+) => {
   const ref = doc(db, "games", gId, "boards", uId, "squares", sId);
   const snapshot = (await getDoc(ref)).data();
 
   try {
-    await setDoc(ref, { ...snapshot, happened: true });
+    await setDoc(ref, { ...snapshot, happened: happened });
   } catch (error) {
     console.log("error marking square:", error);
   }
