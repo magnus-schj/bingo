@@ -19,7 +19,6 @@ interface Params {
 }
 const Game: FC<Props> = () => {
   const { gameId }: Params = useParams();
-  const navigate = useNavigate();
   if (!gameId || !auth.currentUser) return null;
 
   // ! firebased

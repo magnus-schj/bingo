@@ -1,6 +1,7 @@
 import { Card, useTheme, Typography } from "@mui/material";
 import WarningIcon from "@material-ui/icons/Warning";
 import React, { FC } from "react";
+import { auth } from "../firebase/firebase.utils";
 
 interface Props {}
 
@@ -20,7 +21,10 @@ const NotVertified: FC<Props> = () => {
         You are not vertified
       </Typography>
       <Typography variant="body1" color="initial">
-        If i know you, hit me up and i'l let you in
+        If i know you, hit me up with your uid and i'l let you in
+      </Typography>
+      <Typography variant="body2" color="initial">
+        Your uid: {auth.currentUser?.uid}{" "}
       </Typography>
     </Card>
   );
