@@ -1,57 +1,74 @@
 import { useMediaQuery } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../App/hookts";
-import { resetBoard } from "../../features/currentUser/currentUser.slice";
-import { auth, saveWinner } from "../../firebase/firebase.utils";
-import { Square } from "../../interfaces";
+import { collection, doc } from "firebase/firestore";
+import React, { FC, useEffect } from "react";
+import {
+  useFirestore,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from "reactfire";
+import { auth, saveBoard, saveWinner } from "../../firebase/firebase.utils";
+import { generateBoard } from "../SignedIn/utils";
 import SquareComponent from "../Square/Square.component";
 
 import "./Board.styles.css";
-import { hasUserWon, matrixNotNull, matrixToArray } from "./utils";
+import { arrayToMatrix, hasUserWon } from "./utils";
 
-interface Props {}
+interface Props {
+  gameId: string;
+}
 
-const Board: FC<Props> = () => {
-  const dispatch = useAppDispatch();
-  // selectors
-  const currentUserSlice = useAppSelector((state) => state.currentUser);
-  const { board } = currentUserSlice;
+const Board: FC<Props> = ({ gameId }) => {
+  const { currentUser } = auth;
+  if (!currentUser) return null;
 
-  const winnerSlice = useAppSelector((state) => state.winner);
-  const disabled = winnerSlice.uid ? true : false;
-  // state
-  const [loaded, setLoaded] = useState(false);
   // media queries
   const pad = useMediaQuery("(max-width:542px)");
 
-  useEffect(() => {
-    // checks that board is not null or filled with nulls
-    if (matrixNotNull(board) && board) {
-      setLoaded(true);
-      // checks if user has won
-      if (hasUserWon(matrixToArray(board))) {
-        saveWinner(currentUserSlice.userInfo?.uid);
-      }
-    } else setLoaded(false);
-  }, [currentUserSlice.board]);
+  // ! firebase
+  // for game
+  const gameRef = doc(useFirestore(), "games", gameId);
+  const gameRes = useFirestoreDocData(gameRef);
 
-  if (!loaded) return <h1>Loading...</h1>;
+  // for board
+
+  const boardRef = collection(
+    useFirestore(),
+    "games",
+    gameId,
+    "boards",
+    currentUser.uid,
+    "squares"
+  );
+
+  const { data }: any = useFirestoreCollectionData(boardRef);
+  const dataLoaded = gameRes.data && data && data.length === 16;
+  useEffect(() => {
+    // generates boards, saves it if no other exists and current length
+    // is 0
+    currentUser &&
+      data &&
+      data.length === 0 &&
+      saveBoard(currentUser, gameId, generateBoard());
+    // checks if user has won
+    if (dataLoaded && hasUserWon(data)) saveWinner(currentUser.uid, gameId);
+  }, [data]);
   return (
     <div
       style={{
         width: pad ? "95%" : "auto",
       }}
     >
-      {currentUserSlice.board &&
-        currentUserSlice.board.map((row: Square[], i) => (
+      {dataLoaded &&
+        arrayToMatrix(data).map((row, i) => (
           <div key={i} className="row">
-            {row.map(({ id, ...data }) => (
+            {row.map(({ NO_ID_FIELD, ...otherData }) => (
               <SquareComponent
-                key={id}
-                uId={currentUserSlice.userInfo?.uid}
-                sId={id}
-                disabled={disabled}
-                {...data}
+                key={NO_ID_FIELD}
+                uId={currentUser.uid}
+                sId={NO_ID_FIELD}
+                disabled={gameRes.data.winnerID != null}
+                gameId={gameId}
+                {...otherData}
               />
             ))}
           </div>

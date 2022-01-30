@@ -10,11 +10,16 @@ import {
 import { auth } from "./firebase/firebase.utils";
 
 import "./baseStyles.scss";
+import { getFirestore } from "firebase/firestore";
+import { FirestoreProvider, useFirebaseApp } from "reactfire";
 
 function App() {
   const dispatch = useAppDispatch();
 
   const currentUserSlice = useAppSelector((state) => state.currentUser);
+
+  // reactFire
+  const fireStoreInstance = getFirestore(useFirebaseApp());
 
   // listener for when a user loggd in or out
   let unsubscribeFromAuth: null | Unsubscribe = null;
@@ -29,9 +34,11 @@ function App() {
   }, [auth.currentUser]);
 
   return (
-    <div className="App">
-      {currentUserSlice.userInfo ? <SignedIn /> : <SignInAndSignUp />}
-    </div>
+    <FirestoreProvider sdk={fireStoreInstance}>
+      <div className="App">
+        {currentUserSlice.userInfo ? <SignedIn /> : <SignInAndSignUp />}
+      </div>
+    </FirestoreProvider>
   );
 }
 

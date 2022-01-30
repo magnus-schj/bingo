@@ -9,92 +9,33 @@ import {
 } from "../../firebase/firebase.utils";
 import { Button, AppBar, Toolbar, Typography } from "@mui/material";
 import { generateBoard } from "./utils";
-import {
-  collection,
-  doc,
-  DocumentData,
-  DocumentSnapshot,
-  onSnapshot,
-  Unsubscribe,
-} from "firebase/firestore";
-import {
-  resetBoard,
-  setBoard,
-} from "../../features/currentUser/currentUser.slice";
-import Board from "../Board/Board.component";
-import { setWinner } from "../../features/winner/winner.slice";
-import WinnerBanner from "../WinnerBanner.component";
+
+import { Link, Route, Routes, useParams, useLocation } from "react-router-dom";
+import Game from "../Game.component";
+import Root from "../Root.component";
+import NavBar from "../NavBar.component";
 
 interface Props {}
 
 const SignedIn: FC<Props> = () => {
   const { currentUser } = auth;
-  const dispatch = useAppDispatch();
   useEffect(() => {
     //if  creates a user document of there is none
     if (currentUser && currentUser.providerData[0].providerId === "google.com")
       createUserProfileDocument(currentUser, {
         displayName: currentUser.displayName,
+        vertified: false,
       });
-
-    // makes a board, saves it if the is no other board
-    currentUser && saveBoard(currentUser, generateBoard());
-
-    // listener for winner
-    let winUnsub = onSnapshot(
-      doc(db, "games", "christmas2021"),
-      (document: DocumentSnapshot<DocumentData>) => {
-        const data = document.data();
-        if (data && data.winnerID) {
-          dispatch(setWinner(data));
-        }
-      }
-    );
-    // end of listener for winner
-
-    // listener for board
-    let unsub: null | Unsubscribe = null;
-    if (currentUser) {
-      unsub = onSnapshot(
-        collection(db, "boards", currentUser.uid, "squares"),
-        (querySnapShot) => {
-          const board: any = [];
-          querySnapShot.forEach((doc) =>
-            board.push({ id: doc.id, ...doc.data() })
-          );
-          dispatch(setBoard(board));
-        }
-      );
-    }
-
-    // resets board in redux when components dismounts
-
-    return () => {
-      unsub && unsub();
-      winUnsub();
-      dispatch(resetBoard());
-    };
   }, []);
 
   return (
     <div>
-      <AppBar position="fixed" color="primary">
-        <Toolbar>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => auth.signOut()}
-          >
-            Logg ut
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <NavBar />
       <main style={{ marginTop: "6rem" }}>
-        <WinnerBanner />
-        <Board />
-        <div>
-          <h3>Ikke trykk på rutene før hendelsen har skjedd!</h3>
-        </div>
+        <Routes>
+          <Route path="/" element={<Root />} />
+          <Route path=":gameId" element={<Game />} />
+        </Routes>
       </main>
     </div>
   );
