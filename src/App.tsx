@@ -14,7 +14,6 @@ import { getFirestore } from "firebase/firestore";
 import { FirestoreProvider, useFirebaseApp } from "reactfire";
 
 function App() {
-  console.log("here");
   const dispatch = useAppDispatch();
 
   const currentUserSlice = useAppSelector((state) => state.currentUser);
